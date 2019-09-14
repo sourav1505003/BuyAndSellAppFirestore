@@ -17,15 +17,81 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <Button
+            android:id="@+id/buttonCheckout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:background="@color/Red"
+            android:text="Proceed to Checkout"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
         <TextView
             android:id="@+id/textView20"
-            android:layout_width="121dp"
-            android:layout_height="37dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="28dp"
+            android:layout_width="94dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="16dp"
             android:text="Ordered Items:"
+            android:textSize="10dp"
+            app:layout_constraintStart_toStartOf="@+id/description"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="150dp"
+            android:layout_height="27dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:text="Delivery Address:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Add an address"
+            app:layout_constraintStart_toStartOf="@+id/textView19"
+            app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Add a Description:"
+            app:layout_constraintStart_toStartOf="@+id/address"
+            app:layout_constraintTop_toBottomOf="@+id/address" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="111dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="@+id/textView22"
+            app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="186dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="44dp"
+            android:text="Total Price:"
+            app:layout_constraintStart_toStartOf="@+id/orderList"
+            app:layout_constraintTop_toBottomOf="@+id/orderList" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="134dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="56dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView24"
+            app:layout_constraintTop_toTopOf="@+id/textView24" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/orderList"
@@ -36,6 +102,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView20">
 
         </androidx.recyclerview.widget.RecyclerView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
 

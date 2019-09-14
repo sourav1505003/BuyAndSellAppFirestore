@@ -9,5 +9,6 @@
     <color name="view_line">#9f9e9e</color>
     <color name="View_line">#EAEBED</color>
     <color name="Black">#000000</color>
+    <color name="Red">#FF0000</color>
 
 </resources>
