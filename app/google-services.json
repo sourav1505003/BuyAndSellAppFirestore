@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "202016945371",
+    "firebase_url": "https://buyandsellapp-7fe52.firebaseio.com",
+    "project_id": "buyandsellapp-7fe52",
+    "storage_bucket": "buyandsellapp-7fe52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:202016945371:android:44292309ea02a372",
+        "android_client_info": {
+          "package_name": "com.example.buyandsellapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "202016945371-d9ciqo054jkrves2sgisfauujsn83nul.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.buyandsellapp",
+            "certificate_hash": "5e31fd1a618e6dd23adddcd7aa01964fcf5edecc"
+          }
+        },
+        {
+          "client_id": "202016945371-lf32cqelcjkqp05bg1b8r98snc6audeo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.buyandsellapp",
+            "certificate_hash": "58efc6a6f377ce085734d1d150d21c5a84cc0808"
+          }
+        },
+        {
+          "client_id": "202016945371-54fjb77ajor7mvv3agn36rq7dk1uakh7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATGP8Jh9UQPJ-oNNAOxQrbrMK45b7JYSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "202016945371-54fjb77ajor7mvv3agn36rq7dk1uakh7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

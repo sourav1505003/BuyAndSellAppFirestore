@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProductUploadActivity">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="411dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            layout="@layout/logoutbutton"
+            android:layout_width="122dp"
+            android:layout_height="49dp" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="210dp"
+            android:layout_height="match_parent"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <EditText
+        android:id="@+id/inputProductName"
+        android:layout_width="124dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="60dp"
+        android:inputType="text"
+        android:theme="@android:style/Theme.Light"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
+        app:layout_constraintTop_toTopOf="@+id/textView10" />
+
+    <EditText
+        android:id="@+id/inputProductPrice"
+        android:layout_width="124dp"
+        android:layout_height="50dp"
+        android:inputType="number|numberDecimal"
+        android:theme="@android:style/Theme.Light"
+        app:layout_constraintStart_toStartOf="@+id/inputProductName"
+        app:layout_constraintTop_toTopOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="123dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="100dp"
+        android:text="Product Name:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="108dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="52dp"
+        android:text="Price:"
+        app:layout_constraintStart_toStartOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="108dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="44dp"
+        android:text="Condition:"
+        app:layout_constraintStart_toStartOf="@+id/textView16"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="108dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="36dp"
+        android:text="Category:"
+        app:layout_constraintStart_toStartOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <Button
+        android:id="@+id/buttonUploadProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="upload"
+        app:layout_constraintStart_toStartOf="@+id/btnChoose"
+        app:layout_constraintTop_toBottomOf="@+id/btnChoose" />
+
+    <ImageView
+        android:id="@+id/imgView"
+        android:layout_width="127dp"
+        android:layout_height="57dp"
+        app:layout_constraintStart_toStartOf="@+id/spinner2"
+        app:layout_constraintTop_toTopOf="@+id/textView17" />
+
+    <Button
+        android:id="@+id/btnChoose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:text="Choose"
+        app:layout_constraintEnd_toEndOf="@+id/imgView"
+        app:layout_constraintTop_toBottomOf="@+id/imgView" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="110dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="56dp"
+        android:text="Choose a Picture:"
+        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="157dp"
+        android:layout_height="46dp"
+        android:entries="@array/category_arrays"
+        android:prompt="@string/category_prompt"
+        app:layout_constraintStart_toStartOf="@+id/inputProductPrice"
+        app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="157dp"
+        android:layout_height="46dp"
+        android:entries="@array/condition_arrays"
+        android:prompt="@string/condition_prompt"
+        app:layout_constraintStart_toStartOf="@+id/spinner1"
+        app:layout_constraintTop_toTopOf="@+id/textView15" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

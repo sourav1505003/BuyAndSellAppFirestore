@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/timg">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="751dp"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:text="          Please Fill This Form"
+                    android:textSize="28dp"
+                    android:textColor="#fff"
+                    android:backgroundTint="#fff"/>
+                <customfonts.MyEditText
+                    android:id="@+id/firstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="35dp"
+                    android:background="#0000"
+                    android:hint="First Name"
+                    android:inputType="text"
+                    android:padding="16dp"
+                    android:textColor="#ADCCE2"
+                    android:textColorHint="#ADCCE2"
+                    android:textSize="16dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:background="#ADCCE2" />
+
+                <customfonts.MyEditText
+                    android:id="@+id/lastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="35dp"
+                    android:background="#0000"
+                    android:hint="Last Name"
+                    android:inputType="text"
+                    android:padding="16dp"
+                    android:textColor="#ADCCE2"
+                    android:textColorHint="#ADCCE2"
+                    android:textSize="16dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:background="#ADCCE2" />
+
+                <customfonts.MyEditText
+                    android:id="@+id/fieldEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="35dp"
+                    android:background="#0000"
+                    android:hint="Email"
+                    android:inputType="text"
+                    android:padding="16dp"
+                    android:textColor="#ADCCE2"
+                    android:textColorHint="#ADCCE2"
+                    android:textSize="16dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:background="#ADCCE2" />
+
+                <customfonts.MyEditText
+                    android:id="@+id/fieldPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="35dp"
+                    android:background="#0000"
+                    android:hint="Password (Must be at least 6 characters)"
+                    android:inputType="textPassword"
+                    android:padding="16dp"
+                    android:textColor="#ADCCE2"
+                    android:textColorHint="#ADCCE2"
+                    android:textSize="16dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:background="#ADCCE2" />
+
+                <customfonts.MyEditText
+                    android:id="@+id/fieldConfirmpwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="35dp"
+                    android:background="#0000"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword"
+                    android:maxLength="12"
+                    android:padding="16dp"
+                    android:textColor="#ADCCE2"
+                    android:textColorHint="#ADCCE2"
+                    android:textSize="16dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#ADCCE2" />
+
+                <customfonts.MyEditText
+                    android:id="@+id/district"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="35dp"
+                    android:background="#0000"
+                    android:hint="District"
+                    android:inputType="text"
+                    android:maxLength="12"
+                    android:padding="16dp"
+                    android:textColor="#ADCCE2"
+                    android:textColorHint="#ADCCE2"
+                    android:textSize="16dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#ADCCE2" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_marginLeft="28dp"
+                    android:layout_marginRight="35dp"
+                    android:backgroundTint="#fff"
+                    android:text="Date of Birth:"
+                    android:textColor="#fff"
+                    android:textSize="16dp" />
+
+                <DatePicker
+                    android:id="@+id/dateofbirth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginRight="35dp"
+                    android:background="#ffffff"
+                    android:datePickerMode="calendar"
+                    android:hint="Date of Birth"
+                    android:textColor="#ADCCE2"
+                    android:textColorHint="#ADCCE2"
+                    android:textSize="5dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#ADCCE2" />
+
+                <customfonts.MyTextView
+                    android:id="@+id/buttonSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginBottom="28dp"
+                    android:background="@drawable/angle"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="Create"
+                    android:textColor="#fff"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</FrameLayout>

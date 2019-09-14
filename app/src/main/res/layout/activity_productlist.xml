@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ProductListActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp">
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="139dp"
+            android:layout_height="32dp"
+            android:layout_margin="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:text="Choose a Category:" />
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="136dp"
+            android:layout_height="55dp"
+            android:entries="@array/category_arrays"
+            android:prompt="@string/category_prompt" />
+
+        <Button
+            android:id="@+id/buttonFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:text="Apply Filter" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp">
+
+
+        <customfonts.MyEditText
+            android:id="@+id/textboxSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="71dp"
+            android:background="#0000"
+            android:hint="Enter a Product Name"
+            android:inputType="text"
+            android:padding="16dp"
+            android:textColor="#000000"
+            android:textColorHint="#AAAAAA"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/buttonSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="search" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout3">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/productListView"
+                android:layout_width="352dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/noresult"
+        android:layout_width="match_parent"
+        android:layout_height="158dp"
+        android:text="\n         No Such Item"
+        android:textSize="30sp"
+        android:visibility="invisible" />
+
+</LinearLayout>
+
+
+
+

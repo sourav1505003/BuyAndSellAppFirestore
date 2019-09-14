@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">BuyAndSellApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="sample_show_log">Show Log</string>
+    <string name="sample_hide_log">Hide Log</string>
+	<string name="category_prompt">Choose a country</string>
+	<string name="condition_prompt">Choose a country</string>
+
+    <string-array name="category_arrays">
+        <item>Electronics</item>
+        <item>Mobile Phone </item>
+        <item>Furnitures</item>
+        <item>Accessories</item>
+        <item>Clothes</item>
+    </string-array>
+	<string-array name="condition_arrays">
+        <item>Old</item>
+        <item>New</item>
+    </string-array>
+
+</resources>
