@@ -3,6 +3,9 @@ package com.example.buyandsellapp;
 import android.os.Bundle;
 import android.content.Intent;
 
+import com.example.buyandsellapp.Models.Product;
+import com.example.buyandsellapp.Models.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.widget.Toolbar;
@@ -15,16 +18,20 @@ import android.widget.*;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class WelcomeScreenActivity extends BaseActivity implements View.OnClickListener {
 
-    private DatabaseReference mRef;
+    FirebaseFirestore db;
     private Button viewProductButton;
     private Button uploadProductButton;
     private Button buttonLogout;
     private Button buttonViewWishlist;
     private Button buttonViewCart;
     private ImageView carticon;
+    private TextView welcome;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +42,8 @@ public class WelcomeScreenActivity extends BaseActivity implements View.OnClickL
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        mRef = database.getReference();
+        db  = FirebaseFirestore.getInstance();
+        mAuth=FirebaseAuth.getInstance();
         viewProductButton= findViewById(R.id.viewProductButton);
         uploadProductButton = findViewById(R.id.uploadProductButton);
         viewProductButton.setOnClickListener(this);
@@ -85,6 +92,19 @@ public class WelcomeScreenActivity extends BaseActivity implements View.OnClickL
                 startActivity(intent);
             }
         });
+
+        welcome=(TextView)findViewById(R.id.welcome);
+        db.collection("Users").document(mAuth.getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                          @Override
+                                          public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                              User user = documentSnapshot.toObject(User.class);
+                                              welcome.setText("Welcome\n"+user.getUsername());
+                                          }
+                                      }
+
+                );
+        welcome.setText("   Welcome\n"+mAuth.getUid());
     }
 
 

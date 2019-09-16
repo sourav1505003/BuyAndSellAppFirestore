@@ -1,4 +1,4 @@
-package com.example.buyandsellapp;
+package com.example.buyandsellapp.Models;
 import com.google.firebase.Timestamp;
 import com.google.firebase.database.IgnoreExtraProperties;
 

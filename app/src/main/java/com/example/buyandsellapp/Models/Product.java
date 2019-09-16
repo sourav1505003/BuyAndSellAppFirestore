@@ -1,4 +1,4 @@
-package com.example.buyandsellapp;
+package com.example.buyandsellapp.Models;
 
 import android.net.Uri;
 

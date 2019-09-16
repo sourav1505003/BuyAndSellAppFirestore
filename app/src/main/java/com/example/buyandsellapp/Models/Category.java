@@ -1,4 +1,4 @@
-package com.example.buyandsellapp;
+package com.example.buyandsellapp.Models;
 
 public class Category {
     String name;

@@ -9,34 +9,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.firebase.ui.database.ObservableSnapshotArray;
+import com.example.buyandsellapp.Models.ListProduct;
+import com.example.buyandsellapp.Models.Product;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
-import java.util.List;
-import java.util.Map;
 
 public class WishListActivity extends BaseActivity implements View.OnClickListener {
 
@@ -66,12 +53,12 @@ public class WishListActivity extends BaseActivity implements View.OnClickListen
 
         Log.d("fetch", "fetch");
 
-        FirestoreRecyclerOptions<WishlistProduct> options =
-                new FirestoreRecyclerOptions.Builder<WishlistProduct>()
-                        .setQuery(query, WishlistProduct.class)
+        FirestoreRecyclerOptions<ListProduct> options =
+                new FirestoreRecyclerOptions.Builder<ListProduct>()
+                        .setQuery(query, ListProduct.class)
                         .build();
         Log.d("beforeAdapter", "beforeAdapter");
-        adapter = new FirestoreRecyclerAdapter<WishlistProduct, ViewHolder>(options) {
+        adapter = new FirestoreRecyclerAdapter<ListProduct, ViewHolder>(options) {
 
             @Override
             public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -82,7 +69,7 @@ public class WishListActivity extends BaseActivity implements View.OnClickListen
 
 
             @Override
-            protected void onBindViewHolder(final ViewHolder holder, final int position, final WishlistProduct model) {
+            protected void onBindViewHolder(final ViewHolder holder, final int position, final ListProduct model) {
                 // holder.setTxtTitle(model.getProductID());
                 // holder.setTxtDesc(model.getTimestamp().toString());
                 final String productID=model.getProductID();
@@ -150,7 +137,7 @@ public class WishListActivity extends BaseActivity implements View.OnClickListen
             super(itemView);
             root = itemView.findViewById(R.id.list_root);
             txtTitle = itemView.findViewById(R.id.list_title);
-            txtDesc = itemView.findViewById(R.id.list_desc);
+            txtDesc = itemView.findViewById(R.id.list_price);
         }
 
         public void setTxtTitle(String string) {

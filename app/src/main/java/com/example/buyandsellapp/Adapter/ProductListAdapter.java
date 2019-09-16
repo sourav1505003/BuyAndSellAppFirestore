@@ -2,16 +2,13 @@ package com.example.buyandsellapp.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.buyandsellapp.Product;
+import com.example.buyandsellapp.Models.Product;
 import com.example.buyandsellapp.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 

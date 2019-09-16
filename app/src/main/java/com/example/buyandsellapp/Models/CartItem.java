@@ -1,4 +1,4 @@
-package com.example.buyandsellapp;
+package com.example.buyandsellapp.Models;
 
 import java.time.LocalDateTime;
 import java.util.Date;

@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.buyandsellapp.Models.Product;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -200,7 +201,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
             super(itemView);
             root = itemView.findViewById(R.id.list_root);
             txtTitle = itemView.findViewById(R.id.list_title);
-            txtDesc = itemView.findViewById(R.id.list_desc);
+            txtDesc = itemView.findViewById(R.id.list_price);
         }
 
         public void setTxtTitle(String string) {
