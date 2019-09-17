@@ -38,7 +38,7 @@ public class WishListActivity extends BaseActivity implements View.OnClickListen
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishlist);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.tool);
         setSupportActionBar(toolbar);
         db = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.cartListView);

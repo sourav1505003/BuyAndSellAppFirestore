@@ -151,6 +151,9 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
 
                         Log.d("ClickedOn", model.getUid() + "    " + mAuth.getUid());
                         Intent intent = new Intent();
+                        if (model.getUid().equals(mAuth.getUid()) == true)
+                            intent.setClass(ProductListActivity.this, ProductViewActivity.class);
+                        else
                         intent.setClass(ProductListActivity.this, ProductViewCartWishlistActivity.class);
                         intent.putExtra("prevIntent", "ProductListActivity");
                         Log.d("documentId",documentId);
@@ -219,11 +222,6 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }

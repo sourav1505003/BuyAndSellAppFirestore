@@ -9,6 +9,7 @@ public class Product {
     private String uid;
     private  String category;
     private String imageuri;
+    private int qty;
 
     public String getImageuri() {
         return imageuri;
@@ -34,15 +35,20 @@ public class Product {
         return productName;
     }
 
+    public int getQty() {
+        return qty;
+    }
+
     public Product() {
     }
 
-    public Product( String productName,double price, String condition, String uid, String category,String uri) {
+    public Product( String productName,double price, String condition, String uid, String category,String uri,int qty) {
         this.price = price;
         this.productName = productName;
         this.condition = condition;
         this.uid = uid;
         this.category = category;
         this.imageuri=uri;
+        this.qty=qty;
     }
 }

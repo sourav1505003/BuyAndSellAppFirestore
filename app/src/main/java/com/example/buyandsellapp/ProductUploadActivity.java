@@ -37,10 +37,9 @@ import java.util.UUID;
 public class ProductUploadActivity extends AppCompatActivity {
 
     FirebaseFirestore db;
-    //private DatabaseReference mRef;
-    //private DatabaseReference databaseRef;
     private TextView productName;
     private TextView productPrice;
+    private TextView productQty;
     private Spinner spinner1, spinner2;
     private Button buttonLogout;
     private Button buttonProductUpload;
@@ -66,18 +65,14 @@ public class ProductUploadActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         db = FirebaseFirestore.getInstance();
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //databaseRef = database.getReference();
 
-        //mRef = database.getReference().child("Product");
         mAuth = FirebaseAuth.getInstance();
         uid = mAuth.getUid();
         productName = (TextView) findViewById(R.id.inputProductName);
         productPrice = (TextView) findViewById(R.id.inputProductPrice);
+        productQty = (TextView) findViewById(R.id.inputProductQty);
         addListenerOnButton();
         addListenerOnSpinnerItemSelection();
-        // productCategory = (TextView) findViewById(R.id.inputProducCategory);
-        //productCondition = (TextView) findViewById(R.id.inputProductCondition);
 
         buttonProductUpload = findViewById(R.id.buttonUploadProduct);
         btnChoose = (Button) findViewById(R.id.btnChoose);
@@ -126,7 +121,8 @@ public class ProductUploadActivity extends AppCompatActivity {
                                     Product product = new Product(productName.getText().toString(),
                                             Double.parseDouble(productPrice.getText().toString()),
                                             String.valueOf(spinner2.getSelectedItem()), uid,
-                                            String.valueOf(spinner1.getSelectedItem()), uri.toString());
+                                            String.valueOf(spinner1.getSelectedItem()), uri.toString(),
+                                            Integer.parseInt(productQty.getText().toString()));
                                     db.collection("Products")
                                             .document(productID).set(product)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
 
     android:layout_height="60dp"
-    android:background="#0000FF">
+    android:background="#008888">
 
     <ImageView
         android:id="@+id/cartIcon"
@@ -14,10 +14,9 @@
         android:background="@drawable/cart" />
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="129dp"
+        android:id="@+id/tool"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="#0000FF"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
 </LinearLayout>

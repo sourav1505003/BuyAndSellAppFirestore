@@ -36,9 +36,7 @@ public class ProductViewActivity extends BaseActivity implements View.OnClickLis
     private TextView productName;
     private TextView productPrice;
     private TextView productSeller;
-    private Button buttonLogout;
-    private Button buttonAddtoWishlist;
-    private Button buttonAddtoCart;
+
     private ImageView carticon;
     private String productSellerID;
     String productSellerName;
@@ -54,17 +52,16 @@ public class ProductViewActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_productdesc);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        setContentView(R.layout.activity_productviewonly);
+        Toolbar toolbar = findViewById(R.id.tool);
         setSupportActionBar(toolbar);
         db = FirebaseFirestore.getInstance();
         mstorageRef = FirebaseStorage.getInstance().getReference();
         Intent intent = getIntent();
         category = intent.getStringExtra("category");
         productID = intent.getStringExtra("productID");
-        // productSellerID = intent.getStringExtra("productUID");
-        //productIDref = database.getReferenceFromUrl(productID);
-          Log.d("productID", productID);
+
+        Log.d("productID", productID);
 
         productName = (TextView) findViewById(R.id.productdescName);
         productPrice = (TextView) findViewById(R.id.productdescPrice);
@@ -74,23 +71,8 @@ public class ProductViewActivity extends BaseActivity implements View.OnClickLis
         final ImagePopup imagePopup = new ImagePopup(this);
         imagePopup.setWindowHeight(800); // Optional
         imagePopup.setWindowWidth(800); // Optional
-        //imagePopup.setBackgroundColor(Color.TRANSPARENT);  // Optional
-        //imagePopup.setFullScreen(true); // Optional
-        //imagePopup.setImageBitmap(myBitmap);
         imagePopup.setHideCloseIcon(true);  // Optional
         imagePopup.setImageOnClickClose(true);  // Optional
-
-        buttonLogout = findViewById(R.id.buttonLogout);
-        buttonLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("loggingout", "loggingout");
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent();
-                intent.setClass(ProductViewActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
         db.collection("Products").document(productID).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -99,7 +81,9 @@ public class ProductViewActivity extends BaseActivity implements View.OnClickLis
                         if (documentSnapshot.exists()) {
                             Log.d("DocumentSnapshot", documentSnapshot.getData().toString());
                             Product product = documentSnapshot.toObject(Product.class);
-                            productName.setText(product.getProductName());
+                            String prodName = "";
+                            prodName = product.getProductName();
+                            productName.setText(prodName);
                             productPrice.setText(Double.toString(product.getPrice()));
                             productSellerName = "";
                             //retrieve seller name
@@ -109,7 +93,7 @@ public class ProductViewActivity extends BaseActivity implements View.OnClickLis
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                                             if (documentSnapshot.exists()) {
                                                 User user = documentSnapshot.toObject(User.class);
-                                                productSellerName=user.getFullName();
+                                                productSellerName = user.getFullName();
                                                 //productSellerName = documentSnapshot.getData().get("fullName").toString();
                                                 Log.d("productSellerName", productSellerName); // your name values you will get here
                                                 productSeller.setText(productSellerName);
@@ -153,166 +137,6 @@ public class ProductViewActivity extends BaseActivity implements View.OnClickLis
                     }
                 });
 
-/*
-        buttonAddtoWishlist = findViewById(R.id.buttonAddtoWishlist);
-        buttonAddtoWishlist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (productSellerID.equals("other")) {
-                    mRef.child("Wishlist").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
-
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            if (snapshot.getValue() != null) {
-                                Map<String, Object> map = (Map) snapshot.getValue();
-                                boolean r = map.containsKey(productIDref.getKey());
-                                if (r == true) {        //Already in Wishlist
-                                    Toast.makeText(ProductViewActivity.this, "Already added to Wishlist",
-                                            Toast.LENGTH_SHORT).show();
-                                } else {          //Not in wishlist,add to wishlist
-                                    mAuth = FirebaseAuth.getInstance();
-                                    //CartItem cartItem = new CartItem(currentTime, productIDref.getKey(), mAuth.getUid());
-
-                                    mRef.child("Wishlist").child(FirebaseAuth.getInstance().getUid())
-                                            .child(productIDref.getKey()).setValue(productName.getText()).
-                                            addOnSuccessListener(new OnSuccessListener<Void>() {
-
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(ProductViewActivity.this, "Added To Wishlist",
-                                                            Toast.LENGTH_SHORT).show();
-
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(ProductViewActivity.this, "Cannot add to Wishlist",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
-                                }
-
-                                Log.d("Wishlist", map.containsKey(productIDref.getKey()) + " ");
-                            } else {
-
-                                Log.e("Wishist", " it's null.");
-                                mRef.child("Wishlist").child(FirebaseAuth.getInstance().getUid())
-                                        .child(productIDref.getKey()).setValue(productName.getText()).
-                                        addOnSuccessListener(new OnSuccessListener<Void>() {
-
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(ProductViewActivity.this, "Added To Wishlist",
-                                                        Toast.LENGTH_SHORT).show();
-
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(ProductViewActivity.this, "Cannot add to Wishlist",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError firebaseError) {
-                            Log.e("onCancelled", " cancelled");
-                        }
-                    });
-
-                } else {
-                    Toast.makeText(ProductViewActivity.this, "This Product is uploaded by You,\nCannot add to Wishlist",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        buttonAddtoCart = findViewById(R.id.buttonAddtoCart);
-        buttonAddtoCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (productSellerID.equals("other")) {
-                    mRef.child("Cart").child(FirebaseAuth.getInstance().getUid()).addValueEventListener(new ValueEventListener() {
-
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            if (snapshot.getValue() != null) {
-                                Map<String, Object> map = (Map) snapshot.getValue();
-                                boolean r = map.containsKey(productIDref.getKey());
-                                if (r == true) {        //Already in Cart
-                                    Toast.makeText(ProductViewActivity.this, "Already added to Cart",
-                                            Toast.LENGTH_SHORT).show();
-                                } else if (r == false && map.size() <= 10) {    //Add to cart
-                                    mRef.child("Cart").child(FirebaseAuth.getInstance().getUid())
-                                            .child(productIDref.getKey()).setValue(productName.getText()).
-                                            addOnSuccessListener(new OnSuccessListener<Void>() {
-
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(ProductViewActivity.this, "Added To Cart",
-                                                            Toast.LENGTH_SHORT).show();
-
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(ProductViewActivity.this, "Cannot add to Cart",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-
-                                Log.d("cart", map.containsKey(productIDref.getKey()) + " ");
-                            } else {    //No item in cart,add one
-                                Log.d("cart", " it's null.");
-                                mRef.child("Cart").child(FirebaseAuth.getInstance().getUid())
-                                        .child(productIDref.getKey()).setValue(productName.getText()).
-                                        addOnSuccessListener(new OnSuccessListener<Void>() {
-
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(ProductViewActivity.this, "Added To Cart",
-                                                        Toast.LENGTH_SHORT).show();
-
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(ProductViewActivity.this, "Cannot add to Cart",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError firebaseError) {
-                            Log.e("onCancelled", " cancelled");
-                        }
-                    });
-                } else {
-                    Toast.makeText(ProductViewActivity.this, "This Product is uploaded by You,\nCannot add to Cart",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-*/
-        carticon = (ImageView) findViewById(R.id.cartIcon);
-        carticon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("carticon", "carticon");
-                Intent intent = new Intent();
-                intent.setClass(ProductViewActivity.this, CartListActivity.class);
-                startActivity(intent);
-            }
-        });
 
         productImage.setOnClickListener(new View.OnClickListener() {
             @Override

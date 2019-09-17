@@ -27,7 +27,7 @@
             android:layout_height="49dp" />
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/tool"
             android:layout_width="210dp"
             android:layout_height="match_parent"
             android:background="?attr/colorPrimary"
@@ -51,8 +51,17 @@
         android:layout_height="50dp"
         android:inputType="number|numberDecimal"
         android:theme="@android:style/Theme.Light"
-        app:layout_constraintStart_toStartOf="@+id/inputProductName"
+        app:layout_constraintStart_toStartOf="@+id/inputProductQty"
         app:layout_constraintTop_toTopOf="@+id/textView14" />
+
+    <EditText
+        android:id="@+id/inputProductQty"
+        android:layout_width="124dp"
+        android:layout_height="50dp"
+        android:inputType="number|numberDecimal"
+        android:theme="@android:style/Theme.Light"
+        app:layout_constraintStart_toStartOf="@+id/inputProductName"
+        app:layout_constraintTop_toTopOf="@+id/textView21" />
 
     <TextView
         android:id="@+id/textView10"
@@ -65,13 +74,22 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
     <TextView
+        android:id="@+id/textView21"
+        android:layout_width="123dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="32dp"
+        android:text="Quantity:"
+        app:layout_constraintStart_toStartOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
         android:id="@+id/textView14"
         android:layout_width="108dp"
         android:layout_height="51dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="48dp"
         android:text="Price:"
         app:layout_constraintStart_toStartOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <TextView
         android:id="@+id/textView15"
@@ -143,5 +161,6 @@
         android:prompt="@string/condition_prompt"
         app:layout_constraintStart_toStartOf="@+id/spinner1"
         app:layout_constraintTop_toTopOf="@+id/textView15" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

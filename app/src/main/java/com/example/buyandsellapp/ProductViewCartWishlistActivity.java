@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,12 +18,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import com.ceylonlabs.imageviewpopup.ImagePopup;
+import com.example.buyandsellapp.Models.Product;
+import com.example.buyandsellapp.Models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -32,7 +32,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +42,9 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
     private TextView productName;
     private TextView productPrice;
     private TextView productSeller;
-    private Button buttonLogout;
     private Button buttonAddtoWishlist;
+    private SeekBar seekbar;
+    private TextView qtyText;
     private Button buttonAddtoCart;
     private ImageView carticon;
     private String productSellerID;
@@ -56,13 +56,14 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
     File localFile;
     Bitmap myBitmap;
     private String category;
+    int qty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_productdesc);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        setContentView(R.layout.activity_productdesc);
+        Toolbar toolbar = findViewById(R.id.tool);
         setSupportActionBar(toolbar);
         db = FirebaseFirestore.getInstance();
         mstorageRef = FirebaseStorage.getInstance().getReference();
@@ -70,10 +71,28 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
         category = intent.getStringExtra("category");
         productID = intent.getStringExtra("productID");
 
-/*        productName = (TextView) findViewById(R.id.productdescName);
+        productName = (TextView) findViewById(R.id.productdescName);
         productPrice = (TextView) findViewById(R.id.productdescPrice);
         productSeller = (TextView) findViewById(R.id.productdescSeller);
         productImage = (ImageView) findViewById(R.id.imageView);
+        qtyText=(TextView) findViewById(R.id.qty);
+        seekbar = (SeekBar) findViewById(R.id.seekBar);
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                Toast.makeText(getApplicationContext(),"seekbar progress: "+progress, Toast.LENGTH_SHORT).show();
+                qty=progress;
+                qtyText.setText("   X "+qty);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                Toast.makeText(getApplicationContext(),"seekbar touch started!", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Toast.makeText(getApplicationContext(),"seekbar touch stopped!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         final ImagePopup imagePopup = new ImagePopup(this);
         imagePopup.setWindowHeight(800); // Optional
@@ -81,16 +100,91 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
         imagePopup.setHideCloseIcon(true);  // Optional
         imagePopup.setImageOnClickClose(true);  // Optional
 
-*/
+        db.collection("Products").document(productID).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            Log.d("DocumentSnapshot", documentSnapshot.getData().toString());
+                            Product product = documentSnapshot.toObject(Product.class);
+                            String prodName = "";
+                            prodName = product.getProductName();
+                            productName.setText(prodName);
+                            productPrice.setText(Double.toString(product.getPrice()));
+                            productSellerName = "";
+                            seekbar.setMax(product.getQty());
+                            seekbar.setProgress(product.getQty()/10+1);
+                            //retrieve seller name
+                            db.collection("Users").document(product.getUid()).get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            if (documentSnapshot.exists()) {
+                                                User user = documentSnapshot.toObject(User.class);
+                                                productSellerName = user.getFullName();
+                                                //productSellerName = documentSnapshot.getData().get("fullName").toString();
+                                                Log.d("productSellerName", productSellerName); // your name values you will get here
+                                                productSeller.setText(productSellerName);
+                                            } else {
+                                                Log.d("DocumentSnapshotUser", "No such document");
+                                            }
+                                        }
+                                    });
+
+                            try {
+                                localFile = File.createTempFile("images", "jpg");
+                                mstorageRef = FirebaseStorage.getInstance().getReferenceFromUrl(product.getImageuri());
+                                mstorageRef.getFile(localFile)
+                                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                                // Successfully downloaded data to local file
+                                                // ...
+                                                myBitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                                productImage.setImageBitmap(myBitmap);
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        // Handle failed download
+                                        // ...
+                                    }
+                                });
+
+
+                                imagePopup.initiatePopupWithGlide(product.getImageuri());
+
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                        } else {
+                            Log.d("DocumentSnapshot", "No such document");
+                        }
+                    }
+                });
+
+
+        productImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /** Initiate Popup view **/
+                imagePopup.viewPopup();
+
+            }
+        });
+
+
         buttonAddtoWishlist = findViewById(R.id.buttonAddtoWishlist);
         buttonAddtoWishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 db.collection("Users").document(FirebaseAuth.getInstance().getUid()).collection("Wishlist")
-                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>(){
+                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot documentSnapshot) {
-                        if (documentSnapshot.isEmpty() ==false) {
+                        if (documentSnapshot.isEmpty() == false) {
                             List<String> map = (List) documentSnapshot.getDocuments();
                             boolean r = map.contains(productID);
                             if (r == true) {        //Already in Wishlist
@@ -99,7 +193,7 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
                             } else {          //Not in wishlist,add to wishlist
                                 mAuth = FirebaseAuth.getInstance();
                                 Map<String, String> data1 = new HashMap<>();
-                                data1.put("productID",productID);
+                                data1.put("productID", productID);
                                 db.collection("Users").document(FirebaseAuth.getInstance().getUid()).collection("Wishlist")
                                         .document(productID).set(data1)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -120,10 +214,9 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
                             }
 
                             Log.d("Wishlist", map.contains(productID) + " ");
-                        }
-                        else {
+                        } else {
                             Map<String, String> data1 = new HashMap<>();
-                            data1.put("productID",productID);
+                            data1.put("productID", productID);
                             db.collection("Users").document(FirebaseAuth.getInstance().getUid()).collection("Wishlist")
                                     .document(productID).set(data1)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -153,21 +246,23 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
             @Override
             public void onClick(View view) {
                 db.collection("Users").document(FirebaseAuth.getInstance().getUid()).collection("Cart")
-                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>(){
+                        .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot documentSnapshot) {
-                        if (documentSnapshot.isEmpty() ==false) {
+                        if (documentSnapshot.isEmpty() == false) {
                             List<String> map = (List) documentSnapshot.getDocuments();
-                            boolean r = map.contains(productID);
+                            boolean r = map.toString().contains(productID);
                             if (r == true) {        //Already in Wishlist
                                 Toast.makeText(ProductViewCartWishlistActivity.this, "Already added to Cart",
                                         Toast.LENGTH_SHORT).show();
                             } else {          //Not in wishlist,add to wishlist
-                                Map<String, String> data1 = new HashMap<>();
-                                data1.put("productID",productID);
+                                Map<String, Object> data1 = new HashMap<>();
+                                data1.put("productID", productID);
+                                Log.d("map"," "+map.toString());
+                                data1.put("qty",qty);
                                 db.collection("Users").document(FirebaseAuth.getInstance().getUid()).collection("Cart")
-                                       .document(productID) .set(data1)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>()  {
+                                        .document(productID).set(data1)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void AVoid) {
                                                 Toast.makeText(ProductViewCartWishlistActivity.this, "Added To Cart",
@@ -179,19 +274,19 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
                                                 Toast.makeText(ProductViewCartWishlistActivity.this, "Cannot add to Cart",
-                                                        Toast.LENGTH_SHORT).show();                                        }
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
                                         });
 
                             }
 
                             Log.d("Cart", map.contains(productID) + " ");
-                        }
-                        else {
+                        } else {
                             Map<String, String> data1 = new HashMap<>();
-                            data1.put("productID",productID);
+                            data1.put("productID", productID);
                             db.collection("Users").document(FirebaseAuth.getInstance().getUid()).collection("Cart")
-                                    .document(productID) .set(data1)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>()  {
+                                    .document(productID).set(data1)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void AVoid) {
                                             Toast.makeText(ProductViewCartWishlistActivity.this, "Added To Cart",
@@ -203,7 +298,8 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
                                             Toast.makeText(ProductViewCartWishlistActivity.this, "Cannot add to Cart",
-                                                    Toast.LENGTH_SHORT).show();                                        }
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
                                     });
 
                         }
@@ -212,20 +308,6 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
                 });
             }
         });
-
-
-        carticon = (ImageView) findViewById(R.id.cartIcon);
-        carticon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("carticon", "carticon");
-                Intent intent = new Intent();
-                intent.setClass(ProductViewCartWishlistActivity.this, CartListActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
 
     }
 

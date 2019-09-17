@@ -44,11 +44,16 @@ public class BaseActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else if(id == R.id.menu_logout){
-            // do something
             Log.d("loggingout","loggingout");
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent();
             intent.setClass(BaseActivity.this,MainActivity.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.action_editProfile){
+            Log.d("action_editProfile","action_editProfile");
+            Intent intent = new Intent();
+            intent.setClass(BaseActivity.this,EditProfileActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

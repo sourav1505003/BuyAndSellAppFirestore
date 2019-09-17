@@ -36,7 +36,7 @@ public class UploadedProductListActivity extends AppCompatActivity implements Vi
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uploadedproducts);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.tool);
         setSupportActionBar(toolbar);
         db = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.productListView);
@@ -147,12 +147,6 @@ public class UploadedProductListActivity extends AppCompatActivity implements Vi
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

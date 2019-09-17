@@ -3,7 +3,6 @@ package com.example.buyandsellapp;
 import android.os.Bundle;
 import android.content.Intent;
 
-import com.example.buyandsellapp.Models.Product;
 import com.example.buyandsellapp.Models.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,8 +15,6 @@ import android.view.View;
 import android.view.MenuItem;
 import android.widget.*;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -39,7 +36,7 @@ public class WelcomeScreenActivity extends BaseActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcomescreen);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.tool);
         setSupportActionBar(toolbar);
 
         db  = FirebaseFirestore.getInstance();

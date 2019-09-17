@@ -4,13 +4,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     tools:context=".ProductionViewActivity"
     tools:showIn="@layout/activity_productdesc">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/buttonAddtoWishlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Add To Wishlist"
+            app:layout_constraintStart_toStartOf="@+id/textView13"
+            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+        <Button
+            android:id="@+id/buttonAddtoCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="20dp"
+            android:text="Add To Cart"
+            app:layout_constraintStart_toStartOf="@+id/seekBar"
+            app:layout_constraintTop_toBottomOf="@+id/qtyLabel" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="122dp"
+            android:layout_height="122dp"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="68dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="135dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="40dp"
+            android:max="10"
+            android:progress="1"
+            app:layout_constraintStart_toStartOf="@+id/textView9"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
         <TextView
             android:id="@+id/textView11"
@@ -58,34 +98,6 @@
             app:layout_constraintStart_toStartOf="@+id/productdescPrice"
             app:layout_constraintTop_toTopOf="@+id/textView13" />
 
-        <Button
-            android:id="@+id/buttonAddtoWishlist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:text="Add To Wishlist"
-            app:layout_constraintStart_toStartOf="@+id/textView13"
-            app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-        <Button
-            android:id="@+id/buttonAddtoCart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Add To Cart"
-            app:layout_constraintStart_toStartOf="@+id/buttonAddtoWishlist"
-            app:layout_constraintTop_toBottomOf="@+id/buttonAddtoWishlist" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="122dp"
-            android:layout_height="122dp"
-            android:layout_marginStart="108dp"
-            android:layout_marginTop="68dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
         <TextView
             android:id="@+id/productdescName"
             android:layout_width="88dp"
@@ -94,13 +106,32 @@
             app:layout_constraintStart_toEndOf="@+id/textView12"
             app:layout_constraintTop_toTopOf="@+id/textView12" />
 
-        <include
-            layout="@layout/logoutbutton"
-            android:layout_width="122dp"
-            android:layout_height="49dp"
-            android:layout_marginTop="68dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonAddtoCart" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Quantity:"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/buttonAddtoWishlist"
+            app:layout_constraintTop_toBottomOf="@+id/buttonAddtoWishlist" />
+
+        <TextView
+            android:id="@+id/qty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/productdescSeller"
+            app:layout_constraintTop_toTopOf="@+id/seekBar" />
+
+        <TextView
+            android:id="@+id/qtyLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="TextView"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@+id/seekBar"
+            app:layout_constraintTop_toBottomOf="@+id/seekBar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -19,11 +19,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <include
-                layout="@layout/toolbar"
-                />
+            <include layout="@layout/toolbar" />
 
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -32,10 +30,10 @@
         android:id="@+id/welcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:layout_gravity="center"
         android:background="#FF0000"
-        android:text="           Welcome,"
+        android:text="           "
+        android:textAlignment="center"
         android:textColor="#fff"
         android:textSize="20dp" />
 
