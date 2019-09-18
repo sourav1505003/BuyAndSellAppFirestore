@@ -4,13 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +33,7 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     public FirestoreRecyclerAdapter adapter;
+    private Button buttonCheckout;
     FirebaseAuth mAuth;
     Query query;
     String userId;
@@ -39,13 +43,18 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipt);
+        Toolbar toolbar = findViewById(R.id.tool);
+        setSupportActionBar(toolbar);
+
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        userId=mAuth.getUid();
+        userId = mAuth.getUid();
         recyclerView = findViewById(R.id.orderList);
         linearLayoutManager = new LinearLayoutManager(ReceiptActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         Intent intent = getIntent();
+        buttonCheckout = findViewById(R.id.buttonCheckout);
+        buttonCheckout.setOnClickListener(this);
         fetch();
 
     }
@@ -53,7 +62,7 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
     private void fetch() {
 
         Log.d("fetch", "fetch");
-        query=db.collection("Users").document(userId).collection("Cart");
+        query = db.collection("Users").document(userId).collection("Cart");
         FirestoreRecyclerOptions<ListProduct> options =
                 new FirestoreRecyclerOptions.Builder<ListProduct>()
                         .setQuery(query, ListProduct.class)
@@ -72,7 +81,7 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             protected void onBindViewHolder(final ViewHolder holder, final int position, final ListProduct model) {
 
-                final String productId=model.getProductID();
+                final String productId = model.getProductID();
                 Log.d("insideAdapter", model.getProductID());
                 holder.setTxtTitle(productId);
                 db.collection("Products").document(productId).get()
@@ -87,15 +96,6 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
                                               }
 
                         );
-                holder.root.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d("ClickedOn", productId + "    " + mAuth.getUid());
-                        Intent intent = new Intent();
-                        intent.setClass(ReceiptActivity.this, WelcomeScreenActivity.class);
-                        startActivity(intent);
-                    }
-                });
             }
         };
         adapter.startListening();
@@ -115,9 +115,12 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        FirebaseAuth mAuth;
-        mAuth = FirebaseAuth.getInstance();
-        Log.d("gotAuthData", mAuth.getUid());
+        int i = view.getId();
+        if (i == R.id.buttonCheckout) {
+            Intent intent = new Intent();
+            intent.setClass(ReceiptActivity.this, DeliveryProcessingActivity.class);
+            startActivity(intent);
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -131,31 +134,37 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
             root = itemView.findViewById(R.id.list_root);
             txtTitle = itemView.findViewById(R.id.list_title);
             txtQty = itemView.findViewById(R.id.list_qty);
-            txtPrice= itemView.findViewById(R.id.list_price);
+            txtPrice = itemView.findViewById(R.id.list_price);
         }
 
         public void setTxtTitle(String string) {
             txtTitle.setText(string);
         }
+
         public void setTxtPrice(String string) {
             txtPrice.setText(string);
         }
+
         public void setTxtQty(String string) {
             txtQty.setText(string);
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        return super.onOptionsItemSelected(item);
+        super.onOptionsItemSelected(item);
+        return true;
     }
 
     public void onBackPressed() {
         Intent intent = new Intent();
-        intent.setClass(ReceiptActivity.this, WelcomeScreenActivity.class);
+        intent.setClass(ReceiptActivity.this, CartListActivity.class);
         startActivity(intent);
     }
 }

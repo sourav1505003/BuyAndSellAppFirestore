@@ -84,7 +84,7 @@ public class ProductViewActivity extends BaseActivity implements View.OnClickLis
                             String prodName = "";
                             prodName = product.getProductName();
                             productName.setText(prodName);
-                            productPrice.setText(Double.toString(product.getPrice()));
+                            productPrice.setText("  BDT "+product.getPrice());
                             productSellerName = "";
                             //retrieve seller name
                             db.collection("Users").document(product.getUid()).get()

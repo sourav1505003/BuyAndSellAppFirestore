@@ -101,7 +101,6 @@ public class WelcomeScreenActivity extends BaseActivity implements View.OnClickL
                                       }
 
                 );
-        welcome.setText("   Welcome\n"+mAuth.getUid());
     }
 
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,23 +12,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buyandsellapp.Models.Category;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 public class CategoryActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private DatabaseReference mRef;
+    FirebaseFirestore db;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
-    private FirebaseRecyclerAdapter adapter;
+    private FirestoreRecyclerAdapter adapter;
     private Query query;
     FirebaseAuth mAuth;
 
@@ -37,15 +38,16 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        mRef = database.getReference().child("Category");
+        Toolbar toolbar = findViewById(R.id.tool);
+        setSupportActionBar(toolbar);
+
+        db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         recyclerView = findViewById(R.id.categoryList);
         linearLayoutManager = new LinearLayoutManager(CategoryActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         try {
-            query = FirebaseDatabase.getInstance().getReference()
-                    .child("Category");
+            query = db.collection("Category");
             fetch();
         } catch (Exception e) {
             Log.e("null", e.toString());
@@ -55,12 +57,12 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
     private void fetch() {
 
         Log.d("fetch", "fetch");
-        FirebaseRecyclerOptions<Category> options =
-                new FirebaseRecyclerOptions.Builder<Category>()
+        FirestoreRecyclerOptions<Category> options =
+                new FirestoreRecyclerOptions.Builder<Category>()
                         .setQuery(query, Category.class)
                         .build();
         Log.d("beforeAdapter", "beforeAdapter");
-        adapter = new FirebaseRecyclerAdapter<Category, ViewHolder>(options) {
+        adapter = new FirestoreRecyclerAdapter<Category, ViewHolder>(options) {
 
             @Override
             public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -141,15 +143,17 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        return super.onOptionsItemSelected(item);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        return true;
+    }
 
     public void onBackPressed() {
         Intent intent = new Intent();

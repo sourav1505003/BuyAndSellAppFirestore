@@ -45,6 +45,7 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
     private Button buttonAddtoWishlist;
     private SeekBar seekbar;
     private TextView qtyText;
+    private TextView availableQty;
     private Button buttonAddtoCart;
     private ImageView carticon;
     private String productSellerID;
@@ -76,21 +77,19 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
         productSeller = (TextView) findViewById(R.id.productdescSeller);
         productImage = (ImageView) findViewById(R.id.imageView);
         qtyText=(TextView) findViewById(R.id.qty);
+        availableQty=(TextView) findViewById(R.id.availableqty);
         seekbar = (SeekBar) findViewById(R.id.seekBar);
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Toast.makeText(getApplicationContext(),"seekbar progress: "+progress, Toast.LENGTH_SHORT).show();
                 qty=progress;
                 qtyText.setText("   X "+qty);
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(getApplicationContext(),"seekbar touch started!", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(getApplicationContext(),"seekbar touch stopped!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -110,8 +109,15 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
                             String prodName = "";
                             prodName = product.getProductName();
                             productName.setText(prodName);
-                            productPrice.setText(Double.toString(product.getPrice()));
+                            productPrice.setText("  BDT "+product.getPrice());
                             productSellerName = "";
+                            availableQty.setText(product.getQty() + "pieces Available");
+                            if(product.getQty()<=0) {
+                                availableQty.setText("Sold Out");
+                                buttonAddtoCart.setEnabled(false);
+                                buttonAddtoCart.setVisibility(View.INVISIBLE);
+                                seekbar.setVisibility(View.INVISIBLE);
+                            }
                             seekbar.setMax(product.getQty());
                             seekbar.setProgress(product.getQty()/10+1);
                             //retrieve seller name

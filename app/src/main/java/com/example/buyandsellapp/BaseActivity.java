@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -18,16 +19,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       /* carticon = (ImageView) findViewById(R.id.cartIcon);
-        carticon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("carticon","carticon");
-                Intent intent = new Intent();
-                intent.setClass(BaseActivity.this,CartListActivity.class);
-                startActivity(intent);
-            }
-        });*/
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

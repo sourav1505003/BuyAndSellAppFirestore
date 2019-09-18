@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.autofill.AutofillValue;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.buyandsellapp.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +24,8 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.ParseException;
@@ -48,6 +54,9 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editprofile);
+        Toolbar toolbar = findViewById(R.id.tool);
+        setSupportActionBar(toolbar);
+
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
@@ -59,8 +68,31 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         mLastName = (MyEditText) findViewById(R.id.lastName);
         mDistrict = (MyEditText) findViewById(R.id.district);
         mDateofbirth = (DatePicker) findViewById(R.id.dateofbirth);
-
         mSignUpButton.setOnClickListener(this);
+
+        DocumentReference docRef = db.collection("Users").document(mAuth.getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    User user=document.toObject(User.class);
+                    if (document.exists()) {
+                        String[] name=user.fullName.split(" ");
+                        mFirstName.setText(name[0]);
+                        mLastName.setText(name[1]);
+                        String[] date=user.dateOfBirth.split("-");
+                        mDateofbirth.updateDate(Integer.parseInt(date[0]),Integer.parseInt(date[1]),Integer.parseInt(date[2]));
+                        mDistrict.setText(user.district);
+                    } else {
+                        Log.d("", "No such document");
+                    }
+                } else {
+                    Log.d("", "get failed with ", task.getException());
+                }
+            }
+        });
+
     }
 
     @Override
@@ -73,14 +105,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     public void onStart() {
         super.onStart();
         // Check auth on Activity start
-        if (mAuth.getCurrentUser() != null) {
-            try {
-                onAuthSuccess(mAuth.getCurrentUser());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Log.d("Start","started");
-        }
+
     }
     private void signUp() {
         if (!validateForm()) {
@@ -238,6 +263,17 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         Intent intent = new Intent();
         intent.setClass(EditProfileActivity.this, WelcomeScreenActivity.class);
         startActivity(intent);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        return true;
     }
 
 }

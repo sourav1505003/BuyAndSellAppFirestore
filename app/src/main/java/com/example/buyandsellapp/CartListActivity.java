@@ -45,9 +45,8 @@ public class CartListActivity extends BaseActivity implements View.OnClickListen
         Toolbar toolbar = findViewById(R.id.tool);
         setSupportActionBar(toolbar);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         db = FirebaseFirestore.getInstance();
-        buttonCheckout=findViewById(R.id.buttonCheckout);
+        buttonCheckout = findViewById(R.id.buttonCheckout);
         buttonCheckout.setOnClickListener(this);
 
         recyclerView = findViewById(R.id.cartListView);
@@ -55,8 +54,9 @@ public class CartListActivity extends BaseActivity implements View.OnClickListen
         recyclerView.setLayoutManager(linearLayoutManager);
         fetch();
     }
+
     private void fetch() {
-        Query query =db.collection("Users")
+        Query query = db.collection("Users")
                 .document(FirebaseAuth.getInstance().getUid()).collection("Cart");
 
         Log.d("fetch", "fetch");
@@ -80,8 +80,8 @@ public class CartListActivity extends BaseActivity implements View.OnClickListen
             protected void onBindViewHolder(final CartListActivity.ViewHolder holder, final int position, final ListProduct model) {
                 // holder.setTxtTitle(model.getProductID());
                 // holder.setTxtDesc(model.getTimestamp().toString());
-                final String productID=model.getProductID();
-                Log.d("productID",productID);
+                final String productID = model.getProductID();
+                Log.d("productID", productID);
                 db.collection("Products").document(productID).get()
                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                   @Override
@@ -89,7 +89,7 @@ public class CartListActivity extends BaseActivity implements View.OnClickListen
                                                       Product prod = documentSnapshot.toObject(Product.class);
                                                       holder.setTxtTitle(prod.getProductName());
                                                       holder.setTxtDesc(Double.toString(prod.getPrice()));
-                                                      Log.d("title set","title set");
+                                                      Log.d("title set", "title set");
                                                   }
                                               }
                         );
@@ -99,9 +99,9 @@ public class CartListActivity extends BaseActivity implements View.OnClickListen
                     public void onClick(View view) {
                         Intent intent = new Intent();
                         intent.setClass(CartListActivity.this, ProductViewCartWishlistActivity.class);
-                         intent.putExtra("productID",productID);
-                        intent.putExtra("category","null");
-                        intent.putExtra("prevIntent","WishListActivity");
+                        intent.putExtra("productID", productID);
+                        intent.putExtra("category", "null");
+                        intent.putExtra("prevIntent", "WishListActivity");
                         startActivity(intent);
                     }
                 });
@@ -129,11 +129,12 @@ public class CartListActivity extends BaseActivity implements View.OnClickListen
         int i = v.getId();
         if (i == R.id.buttonCheckout) {
             Intent intent = new Intent();
-            Log.d("buttonCheckout","buttonCheckout");
+            Log.d("buttonCheckout", "buttonCheckout");
             intent.setClass(CartListActivity.this, ReceiptActivity.class);
             startActivity(intent);
         }
     }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout root;
         public TextView txtTitle;
@@ -167,6 +168,7 @@ public class CartListActivity extends BaseActivity implements View.OnClickListen
         super.onOptionsItemSelected(item);
         return true;
     }
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.buyandsellapp.Models.Product;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -62,6 +65,9 @@ public class ProductUploadActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_productupload);
+        Toolbar toolbar = findViewById(R.id.tool);
+        setSupportActionBar(toolbar);
+
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         db = FirebaseFirestore.getInstance();
@@ -129,9 +135,11 @@ public class ProductUploadActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
                                                     //mRef.child(productID).child(uid).setValue(true);
-                                                    Map<String, Integer> data1 = new HashMap<>();
+                                                    Map<String, Object> data1 = new HashMap<>();
                                                     data1.put("count", count + 1);
-                                                    db.collection("Category").document(String.valueOf(spinner1.getSelectedItem()))
+                                                    String categoryName=String.valueOf(spinner1.getSelectedItem());
+                                                    data1.put("name",categoryName);
+                                                    db.collection("Category").document(categoryName)
                                                             .set(data1).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
@@ -179,17 +187,7 @@ public class ProductUploadActivity extends AppCompatActivity {
         });
 
 
-        buttonLogout = findViewById(R.id.buttonLogout);
-        buttonLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("loggingout", "loggingout");
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent();
-                intent.setClass(ProductUploadActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -290,4 +288,15 @@ public class ProductUploadActivity extends AppCompatActivity {
         return result;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        return true;
+    }
 }
