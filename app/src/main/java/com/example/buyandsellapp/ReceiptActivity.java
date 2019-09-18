@@ -83,14 +83,16 @@ public class ReceiptActivity extends AppCompatActivity implements View.OnClickLi
 
                 final String productId = model.getProductID();
                 Log.d("insideAdapter", model.getProductID());
+                final int qty=model.getQty();
                 holder.setTxtTitle(productId);
+
                 db.collection("Products").document(productId).get()
                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                   @Override
                                                   public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                       Product prod = documentSnapshot.toObject(Product.class);
                                                       holder.setTxtTitle(prod.getProductName());
-                                                      holder.setTxtPrice(Double.toString(prod.getPrice()));
+                                                      holder.setTxtPrice(Double.toString(prod.getPrice()*qty));
                                                       Log.d("title set", "title set");
                                                   }
                                               }

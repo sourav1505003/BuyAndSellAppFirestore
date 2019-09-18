@@ -101,7 +101,7 @@ public class CartListActivity extends BaseActivity implements View.OnClickListen
                         intent.setClass(CartListActivity.this, ProductViewCartWishlistActivity.class);
                         intent.putExtra("productID", productID);
                         intent.putExtra("category", "null");
-                        intent.putExtra("prevIntent", "WishListActivity");
+                        intent.putExtra("prevIntent", "CartListActivity");
                         startActivity(intent);
                     }
                 });

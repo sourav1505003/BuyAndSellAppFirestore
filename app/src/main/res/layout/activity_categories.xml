@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -31,25 +31,30 @@
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
+            android:layout_height="wrap_content">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/categoryList"
-                android:layout_width="404dp"
-                android:layout_height="575dp"
-                android:layout_marginTop="48dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
 
-            </androidx.recyclerview.widget.RecyclerView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/categoryList"
+                    android:layout_width="404dp"
+                    android:layout_height="575dp"
+                    android:layout_marginTop="48dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
     </LinearLayout>
 
 
-</ScrollView>
+</LinearLayout>
 

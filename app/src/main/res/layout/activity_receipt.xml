@@ -93,7 +93,6 @@
                 android:layout_width="134dp"
                 android:layout_height="51dp"
                 android:layout_marginStart="56dp"
-                android:text="TextView"
                 app:layout_constraintStart_toEndOf="@+id/textView24"
                 app:layout_constraintTop_toTopOf="@+id/textView24" />
 

@@ -264,8 +264,9 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
                             } else {          //Not in wishlist,add to wishlist
                                 Map<String, Object> data1 = new HashMap<>();
                                 data1.put("productID", productID);
-                                Log.d("map"," "+map.toString());
                                 data1.put("qty",qty);
+                                Log.d("map"," "+map.toString());
+
                                 db.collection("Users").document(FirebaseAuth.getInstance().getUid()).collection("Cart")
                                         .document(productID).set(data1)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -344,6 +345,8 @@ public class ProductViewCartWishlistActivity extends ProductViewActivity impleme
             intent.setClass(ProductViewCartWishlistActivity.this, WishListActivity.class);
         else if (prevIntent.equals("UploadedProductListActivity"))
             intent.setClass(ProductViewCartWishlistActivity.this, UploadedProductListActivity.class);
+        else if (prevIntent.equals("CartListActivity"))
+            intent.setClass(ProductViewCartWishlistActivity.this, CartListActivity.class);
 
         intent.putExtra("category", category);
         startActivity(intent);
